@@ -1,0 +1,14 @@
+{{#if @model.supa.sess}}
+  <section class="home">
+    <LinkTo class="card" @route="create">
+      <span>📝</span> Create
+    </LinkTo>
+    <LinkTo class="card" @route="train">
+      <span>👀</span> Train
+    </LinkTo>
+  </section>
+{{else}}
+  <section>
+    This is a box where I quickly explain what this page is about. We should link to the <a href="https://ncase.me/remember/">inspiration article</a> too.
+  </section>
+{{/if}}

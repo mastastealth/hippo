@@ -1,0 +1,31 @@
+{{page-title "Train"}}
+
+<div class="cards">
+  {{#if this.cardQueue.length}}
+    <Card @data={{this.nextCard}} />
+    <Card class={{if this.swapping "swap"}} @data={{this.currentCard}} />
+  {{else}}
+    <Card @data={{hash frontText="Loading..."}} />
+  {{/if}}
+</div>
+
+<button 
+  type="button" 
+  {{on "click" (fn this.gotIt true)}}
+  disabled={{this.noCardsLeft}}
+>Got it!</button>
+<button 
+  type="button" 
+  {{on "click" (fn this.gotIt false)}}
+  disabled={{this.noCardsLeft}}
+>Aw frickin'</button>
+
+<div class="levels">
+  <span>1</span>
+  <span>2</span>
+  <span>3</span>
+  <span>4</span>
+  <span>5</span>
+  <span>6</span>
+  <span>7</span>
+</div>
