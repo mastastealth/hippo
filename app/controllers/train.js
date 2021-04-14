@@ -4,6 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { later } from '@ember/runloop';
 import { alias } from '@ember/object/computed';
+import dayjs from 'dayjs';
 
 export default class TrainController extends Controller {
   @service supabase;
@@ -23,16 +24,50 @@ export default class TrainController extends Controller {
     return !(this.cardQueue.length > 1 && !this.swapping);
   }
 
+  calcNewDue(card, newLevel) {
+    if (newLevel === 1) {
+      return card.dueDate
+    } else {
+      const start = dayjs(this.supabase.startDate);
+      const now = dayjs();
+      const day = start.diff(now, 'day') + 1;
+      let gap;
+
+      switch(newLevel) {
+        case 2:
+          return dayjs().add((day % 2) + 1, 'day').startOf().valueOf();
+        case 3:
+          gap = (day - 2) % 4;
+          return dayjs().add(gap ? 4 - gap : 4, 'day').startOf().valueOf();
+        case 4:
+          gap = (day - 4) % 8;
+          return dayjs().add(gap ? 8 - gap : 8, 'day').startOf().valueOf();
+        case 5:
+          gap = (day - 8) % 16;
+          return dayjs().add(gap ? 16 - gap : 16, 'day').startOf().valueOf();
+        case 6:
+          gap = (day - 16) % 32;
+          return dayjs().add(gap ? 32 - gap : 32, 'day').startOf().valueOf();
+        case 7:
+          gap = (day - 32) % 64;
+          return dayjs().add(gap ? 64 - gap : 64, 'day').startOf().valueOf();
+      }
+    }
+  }
+
   @action
   async gotIt(yes) {
     const card = this.currentCard;
 
-    try {
-      if (card.id) await this.supabase.client.from('cards').update({ 
-        level: yes ? card.level + 1 : 1 
-      }).match({ id: card.id });
-    } catch(e) {
-      console.error(e);
+    if (yes && card.level < 7) {
+      const { error } = await this.supabase.client.from('cards').update({ 
+          level: yes ? card.level + 1 : 1,
+          dueDate: this.calcNewDue(card, yes ? card.level + 1 : 1)
+        }).match({ id: card.id });
+      
+      if (error) console.error(e);
+    } else {
+      // TODO - Delete card and celebrate new long term memory
     }
 
     this.swapCards(yes);

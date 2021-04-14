@@ -27,11 +27,14 @@ body {
   border-bottom: 1px bottom #CCC;
   display: flex;
   height: 50px;
+  justify-content: space-between;
   margin-bottom: 0;
+  padding: 0 5px;
   position: fixed;
   top: 0; left: 0;
   width: 100%;
 }
+  .main-header a { padding: 0 5px; }
 
 /* ============================ */
 

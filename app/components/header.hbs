@@ -1,6 +1,7 @@
 <header class="main-header">
   {{#if this.supabase.sess}}
     <LinkTo @route="index">Home</LinkTo>
+    <span>Day {{this.currentDay}}</span>
     <button type="button" {{on "click" this.supabase.signOut}}>Sign Out</button>
   {{else}}
     <LinkTo @route="login">

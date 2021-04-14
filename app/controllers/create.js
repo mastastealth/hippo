@@ -2,6 +2,7 @@ import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import dayjs from 'dayjs';
 
 export default class CreateController extends Controller {
   @service notifications;
@@ -15,10 +16,6 @@ export default class CreateController extends Controller {
 
   get card() {
     return [this.front, this.back];
-  }
-
-  get currentSide() {
-    return this.card[this.side];
   }
 
   @action 
@@ -43,25 +40,22 @@ export default class CreateController extends Controller {
 
   @action
   async undo() {
-    await this.currentSide.undo();
+    await this.card[this.side].undo();
   }
 
   @action
-  saveCard() {
-    try {
-      this.supabase.addCard({
-        id: Date.now(),
-        frontText: this.frontText,
-        frontImg: this.card[0].toDataURL(),
-        backText: this.backText,
-        backImg: this.card[1].toDataURL(),
-        uid: this.supabase.user.id
-      });
-      this.clearCard();
-      this.notifications.success('Saved the card!', { autoClear: true });
-    } catch (error) {
-      this.notifications.error(error);
-    }
+  async saveCard() {
+    const created = this.supabase.addCard({
+      id: dayjs().valueOf(),
+      frontText: this.frontText,
+      frontImg: this.card[0].toDataURL(),
+      backText: this.backText,
+      backImg: this.card[1].toDataURL(),
+      uid: this.supabase.user.id,
+      dueDate: dayjs().valueOf()
+    });
+
+    if (created) this.clearCard();
   }
 
   @action
