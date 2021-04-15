@@ -8,5 +8,6 @@ export default class CardComponent extends Component {
   @action
   flipCard() {
     this.flipped = !this.flipped;
+    this.args.toggleSide?.();
   }
 }

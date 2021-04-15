@@ -24,6 +24,20 @@ export default class TrainController extends Controller {
     return !(this.cardQueue.length > 1 && !this.swapping);
   }
 
+  get levels() {
+    const day = dayjs().endOf('day').diff(dayjs(this.supabase.startDate).startOf('day'), 'day') + 1;
+
+    return {
+      1: true,
+      2: !!(day % 2),
+      3: !((day - 2) % 4),
+      4: !((day - 4) % 8),
+      5: !((day - 8) % 16),
+      6: !((day - 16) % 32),
+      7: !((day - 32) % 64)
+    }
+  }
+
   calcNewDue(card, newLevel) {
     if (newLevel === 1) {
       return card.dueDate

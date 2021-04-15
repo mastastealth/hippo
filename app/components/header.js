@@ -6,6 +6,8 @@ import dayjs from 'dayjs';
 export default class HeaderComponent extends Component {
   @service supabase;
 
-  currentDay = dayjs().endOf('day').diff(dayjs(this.supabase.startDate).startOf('day'), 'day') + 1;
+  get currentDay() {
+    return dayjs().endOf('day').diff(dayjs(this.supabase.startDate).startOf('day'), 'day') + 1;
+  }
 }
 
