@@ -38,7 +38,7 @@ export default class SupabaseService extends Service {
   async getCards() {
     if (!this.startDate) {
       // Get the first? card for a given user
-      const { data, error } = await this.client.from('cards').select('id').order('id', { ascending: true }).limit(1);
+      const { data } = await this.client.from('cards').select('id').order('id', { ascending: true }).limit(1);
       if (data.length) this.startDate = data?.[0].id;
     }
    

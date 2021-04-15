@@ -1,9 +1,10 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { trackedReset } from 'tracked-toolbox';
 
 export default class CardComponent extends Component {
-  @tracked flipped = false;
+  @trackedReset('args.flipMe') flipped = false;
 
   @action
   flipCard() {

@@ -2,8 +2,15 @@
 
 <div class="cards">
   {{#if this.cardQueue.length}}
-    <Card @data={{this.nextCard}} />
-    <Card class={{if this.swapping "swap"}} @data={{this.currentCard}} />
+    <Card 
+      @data={{this.nextCard}} 
+      @flipMe={{this.swapping}}
+    />
+    <Card 
+      class={{if this.swapping "swap"}} 
+      @data={{this.currentCard}} 
+      @flipMe={{this.swapping}}
+    />
   {{else}}
     <Card @data={{hash frontText="Loading..."}} />
   {{/if}}

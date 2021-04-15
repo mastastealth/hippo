@@ -44,7 +44,7 @@ export default class TrainController extends Controller {
     } else {
       const start = dayjs(this.supabase.startDate);
       const now = dayjs();
-      const day = start.diff(now, 'day') + 1;
+      const day = now.endOf('day').diff(start.startOf('day'), 'day') + 1;
       let gap;
 
       switch(newLevel) {
@@ -80,6 +80,7 @@ export default class TrainController extends Controller {
         }).match({ id: card.id });
       
       if (error) console.error(e);
+      console.info(dayjs(this.calcNewDue(card, yes ? card.level + 1 : 1)))
     } else {
       // TODO - Delete card and celebrate new long term memory
     }
