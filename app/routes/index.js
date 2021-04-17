@@ -8,7 +8,7 @@ export default class IndexRoute extends Route {
     const user = await this.supabase.client.auth.user();
     return {
       user,
-      supa: this.supabase
-    } 
+      supa: this.supabase,
+    };
   }
 }

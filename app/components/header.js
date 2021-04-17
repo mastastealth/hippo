@@ -7,9 +7,10 @@ export default class HeaderComponent extends Component {
   @service supabase;
 
   get currentDay() {
-    return this.supabase.startDate 
-      ? dayjs().endOf('day').diff(dayjs(this.supabase.startDate).startOf('day'), 'day') + 1
+    return this.supabase.startDate
+      ? dayjs()
+          .endOf('day')
+          .diff(dayjs(this.supabase.startDate).startOf('day'), 'day') + 1
       : '';
   }
 }
-

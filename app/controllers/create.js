@@ -18,7 +18,7 @@ export default class CreateController extends Controller {
     return [this.front, this.back];
   }
 
-  @action 
+  @action
   toggleSide() {
     this.side = this.side ? 0 : 1;
   }
@@ -52,7 +52,7 @@ export default class CreateController extends Controller {
       backText: this.backText,
       backImg: this.card[1].toDataURL(),
       uid: this.supabase.user.id,
-      dueDate: dayjs().valueOf()
+      dueDate: dayjs().valueOf(),
     });
 
     if (created) this.clearCard();

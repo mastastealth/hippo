@@ -11,7 +11,7 @@ export default class LoginController extends Controller {
   async login(e) {
     e.preventDefault();
 
-    const { user, error } = await this.supabase.auth.signIn({
+    const { error } = await this.supabase.auth.signIn({
       email: e.target[0].value,
       password: e.target[1].value,
     });
@@ -19,7 +19,7 @@ export default class LoginController extends Controller {
     if (error) {
       this.notifications.error(error.message);
     } else {
-      this.notifications.success("Welcome back!", { autoClear: true });
+      this.notifications.success('Welcome back!', { autoClear: true });
       this.router.transitionTo('index');
     }
   }

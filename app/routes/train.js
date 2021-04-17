@@ -10,22 +10,22 @@ export default class TrainRoute extends Route {
 
     // Create new array of card data from supa db
     if (cards.data?.length) {
-      cards.data.map(c => {
-        cardQueue.push({...c});
+      cards.data.map((c) => {
+        cardQueue.push({ ...c });
       });
 
       if (cardQueue.length === 1) {
-        cardQueue.push({ 
-          id: 0, 
-          frontText: `Almost there. ${cardQueue.length} more cards to go...` 
+        cardQueue.push({
+          id: 0,
+          frontText: `Almost there. ${cardQueue.length} more cards to go...`,
         });
       } else {
         // TODO - Shuffle all cards? but each level goes from highest to lowest
       }
     } else {
-      cardQueue.push({ 
-        id: 0, 
-        frontText: `No cards for today.` 
+      cardQueue.push({
+        id: 0,
+        frontText: `No cards for today.`,
       });
     }
 
