@@ -10,8 +10,8 @@ import ENV from "hippo/config/environment";
 export default class SupabaseService extends Service {
   @service notifications;
 
-  constructor() {
-    super(...arguments);
+  init() {
+    super.init(...arguments);
 
     const supabaseUrl = ENV.SUPA_URL;
     const supabaseKey = ENV.SUPA_KEY;
@@ -20,9 +20,6 @@ export default class SupabaseService extends Service {
       const supa = createClient(supabaseUrl, supabaseKey);
       this.client = supa;
       this.auth = supa.auth;
-      this.getUser();
-      this.getCards();
-
       supa.auth.onAuthStateChange(this.authChange);
     } catch(e) {
       console.error(e);
@@ -81,6 +78,11 @@ export default class SupabaseService extends Service {
 
   @action
   authChange(e, sess) {
+    if (!this.sess) {
+      this.getUser();
+      this.getCards();
+    }
+
     this.sess = sess;
   }
 }
