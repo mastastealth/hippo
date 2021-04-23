@@ -40,7 +40,7 @@ body {
 
 /* ============================ */
 
-.home, .train, .login {
+.home, .train, .login, .create {
   display: grid;
   height: 100%;
   grid-area: body;
