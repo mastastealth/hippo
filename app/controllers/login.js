@@ -17,7 +17,7 @@ export default class LoginController extends Controller {
     });
 
     if (error) {
-      this.notifications.error(error.message);
+      this.notifications.error(error.message, { autoClear: true });
     } else {
       this.notifications.success('Welcome back!', { autoClear: true });
       this.router.transitionTo('index');
