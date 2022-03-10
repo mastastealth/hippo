@@ -3,14 +3,15 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { later } from '@ember/runloop';
-import { alias } from '@ember/object/computed';
+import { debug } from '@ember/debug';
 import dayjs from 'dayjs';
 
 export default class TrainController extends Controller {
   @service supabase;
+  @service notifications;
 
   @tracked swapping = false;
-  @alias('model') cardQueue;
+  @tracked cardQueue = this.model;
 
   get currentCard() {
     return this.cardQueue?.[0];
@@ -86,6 +87,8 @@ export default class TrainController extends Controller {
             .add(gap ? 64 - gap : 64, 'day')
             .startOf()
             .valueOf();
+        case 99:
+          return dayjs().add(99, 'year').startOf().valueOf();
       }
     }
   }
@@ -95,18 +98,50 @@ export default class TrainController extends Controller {
     const card = this.currentCard;
 
     if (yes && card.level < 7) {
+      // You remembered an unmaxed card
       const { error } = await this.supabase.client
         .from('cards')
         .update({
-          level: yes ? card.level + 1 : 1,
-          dueDate: this.calcNewDue(card, yes ? card.level + 1 : 1),
+          level: card.level + 1,
+          dueDate: this.calcNewDue(card, card.level + 1),
         })
         .match({ id: card.id });
 
-      if (error) console.error(error);
-      console.info(dayjs(this.calcNewDue(card, yes ? card.level + 1 : 1)));
+      if (error) {
+        console.error(error);
+        debug(dayjs(this.calcNewDue(card, card.level + 1)));
+      }
+    } else if (yes && card.level === 7) {
+      // You remembered a maxed card
+      const { error } = await this.supabase.client
+        .from('cards')
+        .update({
+          level: card.level + 92,
+          dueDate: this.calcNewDue(card, 99),
+        })
+        .match({ id: card.id });
+
+      if (error) {
+        console.error(error);
+      } else {
+        this.notifications.success(
+          'New information permanently memorized. Archiving card...',
+          { autoClear: true }
+        );
+      }
     } else {
-      // TODO - Delete card and celebrate new long term memory
+      // You misremembered a card
+      const { error } = await this.supabase.client
+        .from('cards')
+        .update({
+          level: 1,
+          dueDate: this.calcNewDue(card, 1),
+        })
+        .match({ id: card.id });
+
+      if (error) {
+        console.error(error);
+      }
     }
 
     this.swapCards(yes);
@@ -117,6 +152,7 @@ export default class TrainController extends Controller {
     // Check if we memorized final card
     if (yes && !this.cardQueue[1].id) {
       this.cardQueue[1].frontText = 'All done!';
+      this.cardQueue[1].backText = 'Come back tomorrow.';
       this.cardQueue = [...this.cardQueue];
     }
 

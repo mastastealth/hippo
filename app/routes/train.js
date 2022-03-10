@@ -25,7 +25,7 @@ export default class TrainRoute extends Route {
     } else {
       cardQueue.push({
         id: 0,
-        frontText: `No cards for today.`,
+        frontText: `No more cards for today.`,
       });
     }
 
