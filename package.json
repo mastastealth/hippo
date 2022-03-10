@@ -23,7 +23,7 @@
     "test:ember": "ember test"
   },
   "devDependencies": {
-    "@architect/sandbox": "^3.4.1",
+    "@architect/sandbox": "^3.7.4",
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.6.0",
     "@embroider/compat": "^0.39.1",
@@ -75,8 +75,8 @@
     "edition": "octane"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^1.9.0",
-    "dayjs": "^1.10.4",
+    "@supabase/supabase-js": "^1.31.1",
+    "dayjs": "^1.10.8",
     "simple-drawing-board": "^3.1.2"
   }
 }
