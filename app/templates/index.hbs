@@ -1,16 +1,23 @@
-<section class="home">
+<section class='home'>
   {{#if @model.supa.sess}}
-    <LinkTo class="card card-btn" @route="create">
-      <span>📝</span> Create
+    <LinkTo class='card card-btn' @route='create'>
+      <span>📝</span>
+      Create
     </LinkTo>
-    <LinkTo class="card card-btn" @route="train">
-      <span>👀</span> Train
+    <LinkTo class='card card-btn' @route='train'>
+      <span>👀</span>
+      Train
     </LinkTo>
   {{else}}
-    <p class="card">
-      Unabashedly inspired by <a href="https://ncase.me/remember/">Nicky Case's project</a>, <strong>HIPPO</strong> is a simple, doodle-centric spaced repetition app that lets you write <em>and</em> draw your own cards, while providing your daily set of exercises.
-      <hr>
-      <LinkTo class="btn" @route="login">Log In</LinkTo>
+    <p class='card'>
+      Unabashedly inspired by
+      <a href='https://ncase.me/remember/'>Nicky Case's project</a>,
+      <strong>HIPPO</strong>
+      is a simple, doodle-centric spaced repetition app that lets you write
+      <em>and</em>
+      draw your own cards, while providing your daily set of exercises.
+      <hr />
+      <LinkTo class='btn' @route='login'>Log In</LinkTo>
     </p>
   {{/if}}
 </section>

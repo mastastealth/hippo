@@ -1,33 +1,35 @@
-{{page-title "Create New Card"}}
-<section class="create">
-  
+{{page-title 'Create New Card'}}
+<section class='create'>
+
   <header>
-    <input type="color" {{on "change" this.changeColor}}>
-    <button type="button" {{on "click" this.undo}}>Undo</button>
+    <input
+      aria-label='Color Picker'
+      type='color'
+      {{on 'change' this.changeColor}}
+    />
+    <button type='button' {{on 'click' this.undo}}>Undo</button>
   </header>
-  
-  <section class="cards">
+
+  <section class='cards'>
     <Card
       @editMode={{true}}
       @registerCard={{this.registerCard}}
-      @data={{hash
-        frontText=this.frontText
-        backText=this.backText
-      }}
-      @toggleSide={{fn this.toggleSide}}
+      @data={{hash frontText=this.frontText backText=this.backText}}
+      @toggleSide={{this.toggleSide}}
     />
   </section>
-  
+
   <Input
-    placeholder="Text on front of card..."
-    autofocus={{true}}
+    aria-label='Front Text'
+    placeholder='Text on front of card...'
     @value={{this.frontText}}
   />
-  
+
   <Input
-    placeholder="Text on back of card..."
+    aria-label='Back Text'
+    placeholder='Text on back of card...'
     @value={{this.backText}}
   />
-  
-  <button type="button" {{on "click" this.saveCard}}>Save</button>
+
+  <button type='button' {{on 'click' this.saveCard}}>Save</button>
 </section>
