@@ -1,31 +1,28 @@
-<div
-  class="card {{if this.flipped "flipped"}}" 
-  ...attributes
->
+<div class='card {{if this.flipped "flipped"}}' ...attributes>
   <button
-    class="btn-flip"
-    type="button" 
-    {{on "click" this.flipCard}}
+    class='btn-flip'
+    type='button'
+    {{on 'click' this.flipCard}}
   >Flip</button>
 
-  <div class="card-side front">
+  <div class='card-side front'>
     <p>{{@data.frontText}}</p>
     {{#if @editMode}}
       <canvas {{init-draw @registerCard}}></canvas>
     {{else}}
       {{#if @data.frontImg}}
-        <img src={{@data.frontImg}} alt="Front side">
+        <img src={{@data.frontImg}} alt='Front side' />
       {{/if}}
     {{/if}}
   </div>
 
-  <div class="card-side back">
+  <div class='card-side back'>
     <p>{{@data.backText}}</p>
     {{#if @editMode}}
       <canvas {{init-draw @registerCard true}}></canvas>
     {{else}}
       {{#if @data.backImg}}
-        <img src={{@data.backImg}} alt="Back side">
+        <img src={{@data.backImg}} alt='Back side' />
       {{/if}}
     {{/if}}
   </div>

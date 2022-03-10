@@ -11,7 +11,16 @@ export default class TrainController extends Controller {
   @service notifications;
 
   @tracked swapping = false;
-  @tracked cardQueue = this.model;
+  @tracked _cardQueue;
+  today = dayjs();
+
+  get cardQueue() {
+    return this._cardQueue || this.model;
+  }
+
+  set cardQueue(v) {
+    this._cardQueue = v;
+  }
 
   get currentCard() {
     return this.cardQueue?.[0];
@@ -47,8 +56,7 @@ export default class TrainController extends Controller {
       return card.dueDate;
     } else {
       const start = dayjs(this.supabase.startDate);
-      const now = dayjs();
-      const day = now.endOf('day').diff(start.startOf('day'), 'day') + 1;
+      const day = this.today.endOf('day').diff(start.startOf('day'), 'day') + 1;
       let gap;
 
       switch (newLevel) {
@@ -151,9 +159,12 @@ export default class TrainController extends Controller {
   swapCards(yes) {
     // Check if we memorized final card
     if (yes && !this.cardQueue[1].id) {
-      this.cardQueue[1].frontText = 'All done!';
-      this.cardQueue[1].backText = 'Come back tomorrow.';
-      this.cardQueue = [...this.cardQueue];
+      const cardQueue = [...this.cardQueue];
+      cardQueue[1].frontText = 'All done!';
+      cardQueue[1].backText = 'Come back tomorrow.';
+
+      this.cardQueue = [...cardQueue];
+      this.supabase.updateStreak();
     }
 
     // Start animation

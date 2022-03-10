@@ -1,11 +1,9 @@
-<header class="main-header">
+<header class='main-header {{if this.supabase.sess "has-auth"}}'>
   {{#if this.supabase.sess}}
-    <LinkTo @route="index">Home</LinkTo>
-    <span>Day {{this.currentDay}}</span>
-    <button type="button" {{on "click" this.supabase.signOut}}>Sign Out</button>
+    <LinkTo @route='index'>Home</LinkTo>
+    <span>🔥 <strong>{{this.currentStreak}}</strong></span>
+    <button type='button' {{on 'click' this.supabase.signOut}}>Sign Out</button>
   {{else}}
-    <LinkTo @route="login">
-      Login
-    </LinkTo>
+    LOGO
   {{/if}}
 </header>

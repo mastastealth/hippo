@@ -1,16 +1,9 @@
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-
-import dayjs from 'dayjs';
 
 export default class HeaderComponent extends Component {
   @service supabase;
 
-  get currentDay() {
-    return this.supabase.startDate
-      ? dayjs()
-          .endOf('day')
-          .diff(dayjs(this.supabase.startDate).startOf('day'), 'day') + 1
-      : '';
-  }
+  @tracked currentStreak = this.supabase.currentStreak;
 }

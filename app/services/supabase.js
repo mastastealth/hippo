@@ -29,7 +29,9 @@ export default class SupabaseService extends Service {
   @tracked cards;
   @tracked user;
   @tracked sess;
+  @tracked profile;
   @tracked startDate;
+  @tracked currentStreak = this.profile.streak;
 
   @action
   async getCards() {
@@ -57,6 +59,10 @@ export default class SupabaseService extends Service {
   async getUser() {
     this.user = await this.auth.user();
     this.sess = await this.auth.session();
+
+    const profile = await this.client.from('profiles').select('id, streak');
+    this.profile = profile.data[0];
+
     console.info('User session initiated.');
   }
 
@@ -66,6 +72,32 @@ export default class SupabaseService extends Service {
 
     if (!error) {
       this.notifications.success('Saved the card!', { autoClear: true });
+      return true;
+    } else {
+      this.notifications.error(error.message, { autoClear: true });
+      return false;
+    }
+  }
+
+  @action
+  async updateStreak() {
+    const today = dayjs();
+    const last = dayjs(this.profile.lastStreak);
+
+    // If it's not a new day, don't update streak
+    if (!today.diff(last, 'day')) return false;
+
+    const { error } = await this.client
+      .from('profiles')
+      .update({
+        streak: this.profile.streak + 1,
+        lastStreak: dayjs().valueOf(),
+      })
+      .match({ id: this.user.id });
+
+    if (!error) {
+      this.currentStreak += 1;
+      this.notifications.success('Updated your streak!', { autoClear: true });
       return true;
     } else {
       this.notifications.error(error.message, { autoClear: true });

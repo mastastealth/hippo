@@ -6,6 +6,7 @@ export default class IndexRoute extends Route {
 
   async model() {
     const user = await this.supabase.client.auth.user();
+
     return {
       user,
       supa: this.supabase,

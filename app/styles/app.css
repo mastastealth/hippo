@@ -29,15 +29,21 @@ a {
 
 .btn {
   background-color: #4cb8c4;
+  border: 0 none;
   border-radius: 5px;
   color: white;
   display: block;
+  font: inherit;
   padding: 10px 5px;
   text-decoration: none;
 }
 
-.btn:hover {
+.btn:not([disabled]):hover {
   background-color: #3cd3ad;
+}
+
+.btn[disabled] {
+  background: #ccc;
 }
 
 /* ============================ */
@@ -51,7 +57,7 @@ a {
   display: flex;
   height: 100%;
   grid-area: header;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: 0;
   padding: 0 5px;
   z-index: 99;
@@ -59,6 +65,10 @@ a {
 
 .main-header a {
   padding: 0 5px;
+}
+
+.main-header.has-auth {
+  justify-content: space-between;
 }
 
 /* ============================ */
@@ -191,6 +201,23 @@ a {
   transform: rotateY(180deg);
 }
 
+.btn-bar {
+  display: flex;
+  gap: 5px;
+}
+
+.btn-bar .btn {
+  flex-grow: 1;
+}
+
+.btn-yay {
+  background-color: green;
+}
+
+.btn-nay {
+  background-color: red;
+}
+
 .btn-flip {
   position: absolute;
   top: 0;
@@ -223,43 +250,53 @@ header button {
 
 .levels {
   display: flex;
+  flex-wrap: wrap;
   font-size: 2em;
-  margin: 0 auto;
+  justify-content: center;
+  margin: 0 auto 20px;
   padding: 10px;
+  width: 500px;
+}
+
+.levels p {
+  font-size: 0.5em;
+  margin-top: 0;
+  text-align: center;
+  width: 100%;
 }
 
 .levels span {
   border: 1px solid currentColor;
   color: currentColor;
-  line-height: 40px;
+  line-height: 50px;
   margin: 2px;
   text-align: center;
-  width: 40px;
+  width: 50px;
 }
 
 .levels span:before {
   content: attr(data-level);
 }
 
-.levels span:nth-child(1) {
+.levels span:nth-of-type(1) {
   color: red;
 }
-.levels span:nth-child(2) {
+.levels span:nth-of-type(2) {
   color: orange;
 }
-.levels span:nth-child(3) {
+.levels span:nth-of-type(3) {
   color: rgb(255, 230, 0);
 }
-.levels span:nth-child(4) {
+.levels span:nth-of-type(4) {
   color: green;
 }
-.levels span:nth-child(5) {
+.levels span:nth-of-type(5) {
   color: blue;
 }
-.levels span:nth-child(6) {
+.levels span:nth-of-type(6) {
   color: purple;
 }
-.levels span:nth-child(7) {
+.levels span:nth-of-type(7) {
   color: magenta;
 }
 

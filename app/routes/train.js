@@ -31,4 +31,8 @@ export default class TrainRoute extends Route {
 
     return cardQueue;
   }
+
+  resetController(controller) {
+    controller.set('_cardQueue', null);
+  }
 }

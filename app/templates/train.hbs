@@ -1,6 +1,17 @@
 <section class='train'>
   {{page-title 'Train'}}
 
+  <div class='levels'>
+    <p>Today we are reviewing cards from levels:</p>
+    <span data-today={{get this.levels 1}} data-level='1'></span>
+    <span data-today={{get this.levels 2}} data-level='2'></span>
+    <span data-today={{get this.levels 3}} data-level='3'></span>
+    <span data-today={{get this.levels 4}} data-level='4'></span>
+    <span data-today={{get this.levels 5}} data-level='5'></span>
+    <span data-today={{get this.levels 6}} data-level='6'></span>
+    <span data-today={{get this.levels 7}} data-level='7'></span>
+  </div>
+
   <div class='cards'>
     {{#if this.cardQueue.length}}
       <Card @data={{this.nextCard}} @flipMe={{this.swapping}} />
@@ -14,24 +25,18 @@
     {{/if}}
   </div>
 
-  <button
-    type='button'
-    {{on 'click' (fn this.gotIt true)}}
-    disabled={{this.noCardsLeft}}
-  >Got it!</button>
-  <button
-    type='button'
-    {{on 'click' (fn this.gotIt false)}}
-    disabled={{this.noCardsLeft}}
-  >Aw frickin'</button>
-
-  <div class='levels'>
-    <span data-today={{get this.levels 1}} data-level='1'></span>
-    <span data-today={{get this.levels 2}} data-level='2'></span>
-    <span data-today={{get this.levels 3}} data-level='3'></span>
-    <span data-today={{get this.levels 4}} data-level='4'></span>
-    <span data-today={{get this.levels 5}} data-level='5'></span>
-    <span data-today={{get this.levels 6}} data-level='6'></span>
-    <span data-today={{get this.levels 7}} data-level='7'></span>
+  <div class='btn-bar'>
+    <button
+      class='btn btn-yay'
+      type='button'
+      {{on 'click' (fn this.gotIt true)}}
+      disabled={{this.noCardsLeft}}
+    >Got it!</button>
+    <button
+      class='btn btn-nay'
+      type='button'
+      {{on 'click' (fn this.gotIt false)}}
+      disabled={{this.noCardsLeft}}
+    >Aw frickin'</button>
   </div>
 </section>
