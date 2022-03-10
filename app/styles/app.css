@@ -4,8 +4,9 @@
   box-sizing: border-box;
 }
 
-html, body {
-  background: #ABC;
+html,
+body {
+  background: linear-gradient(#4cb8c4, #3cd3ad);
   height: 100%;
   margin: 0;
   padding: 0;
@@ -15,19 +16,38 @@ body {
   display: grid;
   font-family: 'Patrick Hand SC', Arial, Helvetica, sans-serif;
   font-size: 1.5rem;
-  grid-template-areas: 
-    "header"
-    "body";
+  grid-template-areas:
+    'header'
+    'body';
   grid-template-rows: 50px 1fr;
   perspective: 600px;
 }
 
+a {
+  color: #4cb8c4;
+}
+
+.btn {
+  background-color: #4cb8c4;
+  border-radius: 5px;
+  color: white;
+  display: block;
+  padding: 10px 5px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background-color: #3cd3ad;
+}
+
+/* ============================ */
+/* =========  Header  ========= */
 /* ============================ */
 
 .main-header {
   align-items: center;
   background: white;
-  border-bottom: 1px bottom #CCC;
+  border-bottom: 1px bottom #ccc;
   display: flex;
   height: 100%;
   grid-area: header;
@@ -36,11 +56,17 @@ body {
   padding: 0 5px;
   z-index: 99;
 }
-  .main-header a { padding: 0 5px; }
+
+.main-header a {
+  padding: 0 5px;
+}
 
 /* ============================ */
 
-.home, .train, .login, .create {
+.home,
+.train,
+.login,
+.create {
   display: grid;
   height: 100%;
   grid-area: body;
@@ -48,64 +74,80 @@ body {
   padding: 10px;
   place-content: center;
 }
-  .home .card {
-    align-items: center;
-    background: white;
-    color: black;
-    display: inline-flex;
-    font-size: 3em;
-    flex-direction: column;
-    height: 240px;
-    justify-content: center;
-    text-decoration: none;
-    transition: transform 0.3s;
-    width: 240px;
-  }
-    .home span { margin-bottom: -20px; }
-    .home .card:hover {
-      transform: scale(1.1);
-      z-index: 1;
-    }
+
+.home .card {
+  background: white;
+  color: black;
+  display: inline-block;
+  font-size: 1.25em;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.3s;
+}
+
+.home .card-btn {
+  align-items: center;
+  display: inline-flex;
+  font-size: 3em;
+  flex-direction: column;
+  height: 240px;
+  justify-content: center;
+  padding: 0;
+  width: 240px;
+}
+
+.home span {
+  margin-bottom: -20px;
+}
+
+.home .card:hover {
+  transform: scale(1.1);
+  z-index: 1;
+}
 /* ============================ */
 
 @keyframes swapCard {
-  0% { 
-    transform: translateX(0); 
-    z-index: 2; 
+  0% {
+    transform: translateX(0);
+    z-index: 2;
   }
 
-  50% { 
+  50% {
     filter: brightness(1);
-    transform: translateX(-100%) rotateZ(-15deg) scale(0.9); 
-    z-index: 2; 
+    transform: translateX(-100%) rotateZ(-15deg) scale(0.9);
+    z-index: 2;
   }
 
-  51% { z-index: 0; }
+  51% {
+    z-index: 0;
+  }
 
-  100% { 
+  100% {
     filter: brightness(0.8);
-    transform: translateX(0); 
-    z-index: 0; 
+    transform: translateX(0);
+    z-index: 0;
   }
 }
 
-.cards { 
+.cards {
   height: 300px;
   margin-bottom: 10px;
   max-width: calc(100vw - 20px);
-  position: relative; 
+  position: relative;
   width: 500px;
 }
-  .cards .card {
-    box-shadow: 1px 2px 10px rgba(46, 53, 61, 0.25);
-    position: absolute;
-    z-index: 1;
-  }
+
+.cards .card {
+  box-shadow: 1px 2px 10px rgba(46, 53, 61, 0.25);
+  height: 300px;
+  position: absolute;
+  z-index: 1;
+}
 
 .card {
   box-shadow: 1px 2px 10px rgba(46, 53, 61, 0.5);
   display: inline-block;
-  height: 300px; 
   margin-bottom: 10px;
   max-width: 100%;
   position: relative;
@@ -113,27 +155,28 @@ body {
   transform-style: preserve-3d;
   width: 500px;
 }
-  .card.flipped {
-    transform: rotateY(180deg);
-  }
-    
-  .card.swap {
-    animation: swapCard 1s;
-    animation-fill-mode: forwards;
-  }
 
-  .card p {
-    font-size: 3rem;
-    margin: 0;
-    left: 10%;
-    pointer-events: none;
-    position: absolute;
-    top: 50%;
-    text-align: center;
-    transform: translateY(-50%);
-    width: 80%;
-    user-select: none;
-  }
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card.swap {
+  animation: swapCard 1s;
+  animation-fill-mode: forwards;
+}
+
+.card p {
+  font-size: 3rem;
+  margin: 0;
+  left: 10%;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  text-align: center;
+  transform: translateY(-50%);
+  width: 80%;
+  user-select: none;
+}
 
 .card-side {
   background-color: white;
@@ -142,10 +185,11 @@ body {
   width: 100%;
   backface-visibility: hidden;
 }
-  .card-side.back {
-    background: #EEE;
-    transform: rotateY( 180deg );
-  }
+
+.card-side.back {
+  background: #eee;
+  transform: rotateY(180deg);
+}
 
 .btn-flip {
   position: absolute;
@@ -169,12 +213,13 @@ input {
 header {
   margin-bottom: 10px;
 }
-  header input,
-  header button {
-    height: 40px;
-    margin-bottom: 0;
-    vertical-align: middle;
-  }
+
+header input,
+header button {
+  height: 40px;
+  margin-bottom: 0;
+  vertical-align: middle;
+}
 
 .levels {
   display: flex;
@@ -182,27 +227,50 @@ header {
   margin: 0 auto;
   padding: 10px;
 }
-  .levels span {
-    border: 1px solid currentColor;
-    color: currentColor;
-    line-height: 40px;
-    margin: 2px;
-    text-align: center;
-    width: 40px;
-  }
-    .levels span:before { content: attr(data-level); }
 
-    .levels span:nth-child(1) { color: red; }
-    .levels span:nth-child(2) { color: orange; }
-    .levels span:nth-child(3) { color: rgb(255, 230, 0); }
-    .levels span:nth-child(4) { color: green; }
-    .levels span:nth-child(5) { color: blue; }
-    .levels span:nth-child(6) { color: purple; }
-    .levels span:nth-child(7) { color: magenta; }
+.levels span {
+  border: 1px solid currentColor;
+  color: currentColor;
+  line-height: 40px;
+  margin: 2px;
+  text-align: center;
+  width: 40px;
+}
 
-    .levels span[data-today] { background: currentColor; }
-      .levels span[data-today]:before { color: white; }
+.levels span:before {
+  content: attr(data-level);
+}
 
-.login input, .login button {
+.levels span:nth-child(1) {
+  color: red;
+}
+.levels span:nth-child(2) {
+  color: orange;
+}
+.levels span:nth-child(3) {
+  color: rgb(255, 230, 0);
+}
+.levels span:nth-child(4) {
+  color: green;
+}
+.levels span:nth-child(5) {
+  color: blue;
+}
+.levels span:nth-child(6) {
+  color: purple;
+}
+.levels span:nth-child(7) {
+  color: magenta;
+}
+
+.levels span[data-today] {
+  background: currentColor;
+}
+.levels span[data-today]:before {
+  color: white;
+}
+
+.login input,
+.login button {
   width: 100%;
 }
