@@ -5,7 +5,7 @@ module.exports = function (environment) {
     modulePrefix: 'hippo',
     environment,
     rootURL: '/',
-    locationType: 'auto',
+    locationType: 'history',
     EmberENV: {
       FEATURES: {},
       EXTEND_PROTOTYPES: {
