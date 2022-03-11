@@ -31,7 +31,7 @@ export default class SupabaseService extends Service {
   @tracked sess;
   @tracked profile;
   @tracked startDate;
-  @tracked currentStreak = this.profile.streak;
+  @tracked currentStreak;
 
   @action
   async getCards() {
@@ -62,6 +62,7 @@ export default class SupabaseService extends Service {
 
     const profile = await this.client.from('profiles').select('id, streak');
     this.profile = profile.data[0];
+    this.currentStreak = this.profile.streak;
 
     console.info('User session initiated.');
   }

@@ -1,8 +1,14 @@
 <header class='main-header {{if this.supabase.sess "has-auth"}}'>
   {{#if this.supabase.sess}}
     <LinkTo @route='index'>Home</LinkTo>
-    <span>🔥 <strong>{{this.currentStreak}}</strong></span>
-    <button type='button' {{on 'click' this.supabase.signOut}}>Sign Out</button>
+
+    {{#if this.currentStreak}}
+      <span>🔥 <strong>{{this.currentStreak}}</strong></span>
+    {{/if}}
+
+    <button type='button' {{on 'click' this.supabase.signOut}}>
+      Sign Out
+    </button>
   {{else}}
     LOGO
   {{/if}}
