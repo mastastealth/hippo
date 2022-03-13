@@ -60,7 +60,7 @@ export default class SupabaseService extends Service {
     this.user = await this.auth.user();
     this.sess = await this.auth.session();
 
-    const profile = await this.client.from('profiles').select('id, streak');
+    const profile = await this.client.from('profiles').select();
     this.profile = profile.data[0];
     this.currentStreak = this.profile.streak;
 
@@ -84,14 +84,18 @@ export default class SupabaseService extends Service {
   async updateStreak() {
     const today = dayjs();
     const last = dayjs(this.profile.lastStreak);
+    console.log(today, last);
 
     // If it's not a new day, don't update streak
     if (!today.diff(last, 'day')) return false;
 
+    // If more than a day has gone by, reset streak
+    if (today.diff(last, 'day') > 1) this.currentStreak = 0;
+
     const { error } = await this.client
       .from('profiles')
       .update({
-        streak: this.profile.streak + 1,
+        streak: this.currentStreak + 1,
         lastStreak: dayjs().valueOf(),
       })
       .match({ id: this.user.id });
